@@ -1,0 +1,12 @@
+version: '3.4'
+services:
+  db:
+    image: postgres:11
+    environment:
+      POSTGRES_PASSWORD: p@ssw0rd!
+      POSTGRES_USER: postgres
+      POSTGRES_DB: local
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/seed/:/docker-entrypoint-initdb.d
