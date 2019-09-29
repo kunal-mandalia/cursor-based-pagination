@@ -1,0 +1,36 @@
+{
+  "name": "cursor-based-pagination",
+  "version": "1.0.0",
+  "description": "Cursor based pagination to handle sorting",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./app.js",
+    "dev": "nodemon ./app.js",
+    "lint": "eslint '**/*.js'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunal-mandalia/cursor-based-pagination.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunal-mandalia/cursor-based-pagination/issues"
+  },
+  "homepage": "https://github.com/kunal-mandalia/cursor-based-pagination#readme",
+  "dependencies": {
+    "apollo-server-express": "^2.9.4",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.5"
+  },
+  "devDependencies": {
+    "eslint": "^6.5.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^1.19.3"
+  }
+}

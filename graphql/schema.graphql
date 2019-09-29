@@ -1,0 +1,70 @@
+interface Node {
+  id: ID!
+  created_at: String!
+}
+
+type PageInfo {
+  startCursor: String!
+  endCursor: String!
+  hasPreviousPage: Boolean!
+  hasNextPage: Boolean!
+}
+
+interface Edge {
+  node: Node!
+  cursor: String!
+}
+
+interface Connection {
+  edges: [Edge!]
+  pageInfo: PageInfo!
+}
+
+type User implements Node {
+  id: ID!
+  name: String!
+  age: Int!
+  randomQuote: String!
+  created_at: String!
+}
+
+type UserEdge implements Edge {
+  node: User!
+  cursor: String!
+}
+
+type UserConnection implements Connection {
+  edges: [UserEdge!]
+  pageInfo: PageInfo!
+}
+
+enum UserSortField {
+  NAME,
+  AGE
+}
+
+enum SortOrder {
+  ASC,
+  DESC
+}
+
+input UserSortOption {
+  field: UserSortField,
+  order: SortOrder
+}
+
+input PaginatedSearch {
+  first: Int!
+  # last: Int!
+  before: String
+  after: String
+  sort: [UserSortOption]
+}
+
+type Query {
+  Users(input: PaginatedSearch): [UserConnection!]
+}
+
+type Mutation {
+  UpdateUser(id: String): User!
+}
