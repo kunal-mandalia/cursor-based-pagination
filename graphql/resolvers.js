@@ -1,4 +1,6 @@
-const usersData = require('../data/users');
+const {
+  fromCursor, fromEntity, toCursor, compareCursors,
+} = require('../util/cursor');
 
 const sortByUserSort = (userSort) => (a, b) => {
   const { field, order } = userSort;
@@ -13,8 +15,8 @@ const sortByUserSort = (userSort) => (a, b) => {
   return true;
 };
 
-function getUsers(first, after, sort) {
-  let users = [...usersData];
+function getUsers(data, first, after, sort) {
+  let users = [...data];
 
   if (sort) {
     // TODO: sort across all sort options, not just the first
@@ -22,8 +24,8 @@ function getUsers(first, after, sort) {
   }
 
   if (after) {
-    const afterDate = new Date(after);
-    users = users.filter((u) => new Date(u.created_at) > afterDate);
+    const cursor = fromCursor(after);
+    users = users.filter((u) => compareCursors()(fromEntity(u))(cursor));
   }
 
   users = users.slice(0, first);
@@ -32,16 +34,17 @@ function getUsers(first, after, sort) {
 }
 
 const queries = {
-  Users: (_, { input: { first = 2, after, sort } }) => {
-    const data = getUsers(first, after, sort);
+  Users: async (_, { input: { first = 2, after, sort } }, context) => {
+    const allUsers = await context.repositories.user.find();
+    const data = getUsers(allUsers, first, after, sort);
     const pageInfo = {
-      startCursor: data.length > 0 ? data[0].created_at : null,
-      endCursor: data.length > 0 ? data[data.length - 1].created_at : null,
+      startCursor: data.length > 0 ? toCursor(data[0]) : null,
+      endCursor: data.length > 0 ? toCursor(data[data.length - 1]) : null,
     };
     return [{
       edges: data.map((user) => ({
         node: user,
-        cursor: user.created_at,
+        cursor: toCursor(user),
       })),
       pageInfo,
     }];
@@ -55,7 +58,7 @@ const fields = {
 };
 
 const mutations = {
-  UpdateUser: () => usersData[0],
+  UpdateUser: () => [],
 };
 
 const resolvers = {

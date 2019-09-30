@@ -7,9 +7,9 @@ CREATE TABLE app_user (
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO app_user(name,age)
+INSERT INTO app_user(name,age,created_at)
 VALUES
-  ('Alice', 20),
-  ('Bob', 35),
-  ('Carl', 22),
-  ('Dough', 30);
+  ('Alice', 20,'2019-01-01'),
+  ('Bob', 35, '2019-03-01'),
+  ('Carl', 22, '2018-05-01'),
+  ('Dough', 30, '2019-08-01');
