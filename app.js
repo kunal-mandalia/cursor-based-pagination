@@ -1,7 +1,10 @@
+/* eslint-disable no-console */
 const express = require('express');
 const graphqlHTTP = require('./graphql/middleware');
 
 const app = express();
+const { getUsers } = require('./data/repository');
+
 const port = process.env.PORT || 8080;
 
 app.get('/status', (_, res) => {
@@ -10,7 +13,8 @@ app.get('/status', (_, res) => {
 
 app.use('/graphql', graphqlHTTP());
 
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
+app.listen(port, async () => {
+  const users = await getUsers();
+  console.log('>>> users', users);
   console.log(`cursor-based-pagination app running on ${port}`);
 });
