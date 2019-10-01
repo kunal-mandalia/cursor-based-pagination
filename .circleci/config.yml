@@ -44,6 +44,6 @@ jobs:
       - run:
           name: run tests
           command: |
-            DB_HOST=db_1 node ./scripts/waitForDb.js && npm run test
+            DB_HOST=0.0.0.0 node ./scripts/waitForDb.js && npm run test
 
       
