@@ -29,7 +29,7 @@ function createUsersQuery(first = 2, after) {
 async function findUsers({ first, after = undefined }) {
   const query = createUsersQuery(first, after);
   const response = await axios.post(`${baseEndpoint}/graphql`, { query });
-  console.log('findUsers response', response);
+  console.log('findUsers response errors', response.data.errors);
   return response.data.data.Users[0];
 }
 
