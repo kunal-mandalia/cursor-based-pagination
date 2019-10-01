@@ -10,7 +10,7 @@ async function wait(ms = DELAY) {
 }
 
 async function waitForDb() {
-  for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
+  for (let i = 0; i <= MAX_ATTEMPTS; i += 1) {
     if (i === MAX_ATTEMPTS) {
       throw new Error(`Max attempts exceeded ${MAX_ATTEMPTS}`);
     }
