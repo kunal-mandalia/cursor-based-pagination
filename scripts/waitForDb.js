@@ -11,6 +11,9 @@ async function wait(ms = DELAY) {
 
 async function waitForDb() {
   for (let i = 0; i < MAX_ATTEMPTS; i += 1) {
+    if (i === MAX_ATTEMPTS) {
+      throw new Error(`Max attempts exceeded ${MAX_ATTEMPTS}`);
+    }
     console.log(`connection attempt ${i + 1}`);
     try {
       const result = await db.raw('select 1+1 as up');
