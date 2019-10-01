@@ -2,6 +2,8 @@
 const express = require('express');
 const graphqlHTTP = require('./graphql/middleware');
 
+let instance;
+
 const app = express();
 
 const port = process.env.PORT || 8080;
@@ -12,6 +14,23 @@ app.get('/status', (_, res) => {
 
 app.use('/graphql', graphqlHTTP());
 
-app.listen(port, async () => {
-  console.log(`cursor-based-pagination app running on ${port}`);
-});
+async function start(p = port) {
+  return new Promise((resolve) => {
+    instance = app.listen(p, () => {
+      console.log(`cursor-based-pagination app running on ${p}`);
+      return resolve();
+    });
+  });
+}
+
+async function stop() {
+  return new Promise((resolve) => {
+    instance.close();
+    return resolve();
+  });
+}
+
+module.exports = {
+  start,
+  stop,
+};
