@@ -2,7 +2,7 @@ const axios = require('axios').default;
 const { start, stop } = require('./app');
 
 const port = 8081;
-const baseEndpoint = `http://localhost:${port}`;
+const baseEndpoint = `http://0.0.0.0:${port}`;
 
 function createUsersQuery(first = 2, after) {
   return `
