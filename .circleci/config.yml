@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - setup_remote_docker
-      
+
       - checkout
 
       # Download and cache dependencies
@@ -44,6 +44,6 @@ jobs:
       - run:
           name: run tests
           command: |
-            node ./scripts/waitForDb.js && npm run test
+            DB_HOST=db node ./scripts/waitForDb.js && npm run test
 
       

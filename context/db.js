@@ -1,7 +1,7 @@
 const options = {
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
+    host: process.env.DB_HOST || '0.0.0.0',
     user: 'postgres',
     password: 'p@ssw0rd!',
     database: 'local',
