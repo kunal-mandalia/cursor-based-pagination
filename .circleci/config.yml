@@ -33,6 +33,15 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run:
+          name: start database
+          command: docker-compose up --exit-code-from db
+          background: true
+
       # run tests!
-      - run: npm run test
+      - run:
+          name: run tests
+          command: |
+            node ./scripts/waitForDb.js && npm run test
+
       
