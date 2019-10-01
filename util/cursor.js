@@ -1,26 +1,43 @@
-
-function fromCursor(cursor) {
-  return Number(cursor);
-}
-
-function fromEntity(entity) {
-  return entity.created_at;
-}
-
-function toCursor(entity) {
-  return entity.created_at;
-}
-
-const compareCursors = (direction = 'ASC') => (c1) => (c2) => {
-  if (direction === 'ASC') {
-    return c1 < c2;
+class Cursor {
+  static fieldMapper(field, value) {
+    if (['age'].includes(field)) {
+      return Number(value);
+    }
+    return value;
   }
-  return c2 < c1;
-};
 
-module.exports = {
-  fromCursor,
-  fromEntity,
-  toCursor,
-  compareCursors,
-};
+  /**
+   * @returns {string} e.g. 1583020800000__NAME_DESC
+   */
+  static serialize(entity, sort) {
+    const timestamp = new Date(Number(entity.created_at)).getTime();
+
+    let cursor = `${timestamp}`;
+
+    if (sort) {
+      cursor += `___${sort.field}_${entity[sort.field]}_${sort.order}`;
+    }
+    return cursor;
+  }
+
+  /**
+   * @returns {object} { created_at, NAME, ASC }
+   */
+  static deserialize(cursor) {
+    const data = {};
+    const [timestamp, sort] = cursor.split('___');
+    if (sort) {
+      const [field, value, order] = sort.split('_');
+      data.sort = {
+        field,
+        value: Cursor.fieldMapper(field, value),
+        order,
+      };
+    }
+    data.created_at = new Date(Number(timestamp));
+    return data;
+  }
+}
+
+
+module.exports = Cursor;

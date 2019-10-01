@@ -39,13 +39,13 @@ type UserConnection implements Connection {
 }
 
 enum UserSortField {
-  NAME,
-  AGE
+  age,
+  name
 }
 
 enum SortOrder {
-  ASC,
-  DESC
+  asc,
+  desc
 }
 
 input UserSortOption {
@@ -58,7 +58,7 @@ input PaginatedSearch {
   # last: Int!
   before: String
   after: String
-  sort: [UserSortOption]
+  sort: UserSortOption
 }
 
 type Query {

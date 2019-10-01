@@ -1,6 +1,7 @@
 class User {
-  constructor({ db }) {
+  constructor({ db, Cursor }) {
     this.db = db;
+    this.Cursor = Cursor;
   }
 
   async getById(id) {
@@ -8,9 +9,37 @@ class User {
     return result;
   }
 
-  async find() {
-    const result = await this.db.raw('SELECT * FROM app_user');
-    return result.rows;
+  async find(first = 2, before, after, sort) {
+    let cursorInfo;
+
+    if (before && after) throw new Error('before and after cursors are mutually exclusive');
+
+    if (after) {
+      cursorInfo = this.Cursor.deserialize(after, sort);
+    }
+
+    const result = await this.db.from('app_user')
+      .select('*')
+      .modify((queryBuilder) => {
+        if (cursorInfo) {
+          if (cursorInfo.sort) {
+            queryBuilder
+              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'desc' ? '<' : '>'}`, cursorInfo.sort.value)
+              .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
+              .andWhere('created_at', '<', cursorInfo.created_at)
+              .orderBy(cursorInfo.sort.field, cursorInfo.sort.order);
+          } else {
+            queryBuilder
+              .where('created_at', '<', cursorInfo.created_at);
+          }
+        } else if (sort) {
+          queryBuilder
+            .orderBy(sort.field, sort.order);
+        }
+      })
+      .orderBy('created_at', 'desc')
+      .limit(first);
+    return result;
   }
 }
 

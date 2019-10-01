@@ -6,6 +6,7 @@ services:
       POSTGRES_PASSWORD: p@ssw0rd!
       POSTGRES_USER: postgres
       POSTGRES_DB: local
+      DEBUG: knex:query
     ports:
       - 5432:5432
     volumes:
