@@ -2,8 +2,8 @@
 /* eslint-disable no-await-in-loop */
 const db = require('../context/db');
 
-const MAX_ATTEMPTS = 100;
-const DELAY = 1000;
+const MAX_ATTEMPTS = 20;
+const DELAY = 5000;
 
 async function wait(ms = DELAY) {
   return new Promise((resolve) => setTimeout(resolve, ms));
