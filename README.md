@@ -1,4 +1,4 @@
-# cursor-based-pagination
+# cursor-based-pagination [![CircleCI](https://circleci.com/gh/kunal-mandalia/cursor-based-pagination.svg?style=svg)](https://circleci.com/gh/kunal-mandalia/cursor-based-pagination)
 > Cursor based pagination to handle sorting
 
 ## Running locally
