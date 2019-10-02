@@ -1,5 +1,7 @@
 const axios = require('axios').default;
+
 const { start, stop } = require('./app');
+const db = require('./context/db');
 
 const port = 8081;
 const baseEndpoint = `http://0.0.0.0:${port}`;
@@ -35,9 +37,9 @@ async function findUsers({ first, after = undefined, sort = undefined }) {
   return response.data.data.Users[0];
 }
 
-async function wait(ms = 1000) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+// async function wait(ms = 1000) {
+//   return new Promise((resolve) => setTimeout(resolve, ms));
+// }
 
 beforeAll(async () => {
   await start(port);
@@ -45,7 +47,7 @@ beforeAll(async () => {
 
 afterAll(async (done) => {
   await stop();
-  await wait();
+  await db.destroy();
   done();
 });
 

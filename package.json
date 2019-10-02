@@ -7,8 +7,9 @@
     "start": "node ./index.js",
     "dev": "nodemon ./index.js",
     "lint": "eslint '**/*.js'",
-    "test:watch": "jest --watch --forceExit",
-    "test": "jest --forceExit"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:CI": "node ./scripts/waitForDb && jest"
   },
   "repository": {
     "type": "git",

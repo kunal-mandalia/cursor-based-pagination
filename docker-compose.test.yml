@@ -7,6 +7,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ~/repo/test-results:/test-results
-    command: node ./scripts/waitForDb.js && npm run test
+    command: npm run test:CI
     environment:
       - JEST_JUNIT_OUTPUT=./test-results/junit/results.xml
