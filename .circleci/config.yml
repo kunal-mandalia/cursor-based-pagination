@@ -9,12 +9,12 @@ jobs:
       - run:
           name: Run services
           command: |
-            COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f ./docker-compose.yml down
-            COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f ./docker-compose.yml up --build
+            COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f docker-compose.yml down
+            COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f docker-compose.yml up --build
           background: true
       - run:
           name: Run tests
-          command: COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f ./docker-compose.tests.yml up --build
+          command: COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f docker-compose.tests.yml up --build
       - store_artifacts:
           path: ./test-results/junit
       - store_test_results:
