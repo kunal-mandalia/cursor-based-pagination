@@ -1,6 +1,5 @@
 version: '2'
 services:
-
   app:
     image: app:latest
     build:
@@ -10,7 +9,7 @@ services:
       - ~/repo/test-results:/test-results
       - /var/run/docker.sock:/var/run/docker.sock
     command: |
-      node ./scripts/waitForDb.js
+      DB_HOST=db node ./scripts/waitForDb.js
       npm run test
     environment:
       - JEST_JUNIT_OUTPUT=./test-results/junit/results.xml
