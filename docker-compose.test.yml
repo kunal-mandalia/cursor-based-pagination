@@ -8,8 +8,6 @@ services:
     volumes:
       - ~/repo/test-results:/test-results
       - /var/run/docker.sock:/var/run/docker.sock
-    command: |
-      node ./scripts/waitForDb.js
-      npm run test
+    command: node ./scripts/waitForDb.js && npm run test
     environment:
       - JEST_JUNIT_OUTPUT=./test-results/junit/results.xml
