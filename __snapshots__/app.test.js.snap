@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`users should be ordered by name ascendingly 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "cursor": "1546300800000___name_Alice_asc",
+      "node": Object {
+        "age": 20,
+        "created_at": "1546300800000",
+        "name": "Alice",
+      },
+    },
+    Object {
+      "cursor": "1551398400000___name_Bob_asc",
+      "node": Object {
+        "age": 35,
+        "created_at": "1551398400000",
+        "name": "Bob",
+      },
+    },
+  ],
+  "pageInfo": Object {
+    "endCursor": "1551398400000___name_Bob_asc",
+  },
+}
+`;
+
+exports[`users should be ordered by name descendingly 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "cursor": "1583020800000___name_Zen_desc",
+      "node": Object {
+        "age": 90,
+        "created_at": "1583020800000",
+        "name": "Zen",
+      },
+    },
+    Object {
+      "cursor": "1527811200000___name_Ed_desc",
+      "node": Object {
+        "age": 22,
+        "created_at": "1527811200000",
+        "name": "Ed",
+      },
+    },
+  ],
+  "pageInfo": Object {
+    "endCursor": "1527811200000___name_Ed_desc",
+  },
+}
+`;

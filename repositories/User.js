@@ -24,7 +24,7 @@ class User {
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
-              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'desc' ? '<' : '>'}`, cursorInfo.sort.value)
+              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'asc' ? '<' : '>'}`, cursorInfo.sort.value)
               .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
               .andWhere('created_at', '<', cursorInfo.created_at)
               .orderBy(cursorInfo.sort.field, cursorInfo.sort.order);

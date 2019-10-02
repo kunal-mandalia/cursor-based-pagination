@@ -1,0 +1,12 @@
+version: '2'
+services:
+  app:
+    image: app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ~/repo/test-results:/test-results
+    command: npm run test:CI
+    environment:
+      - JEST_JUNIT_OUTPUT=./test-results/junit/results.xml
