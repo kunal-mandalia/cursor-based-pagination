@@ -14,7 +14,7 @@ jobs:
           background: true
       - run:
           name: Run tests
-          command: COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f docker-compose.test.yml up --build
+          command: COMPOSE_PROJECT_NAME=cursor-based-pagination docker-compose -f docker-compose.test.yml up --build --exit-code-from app
       - store_artifacts:
           path: ./test-results/junit
       - store_test_results:
