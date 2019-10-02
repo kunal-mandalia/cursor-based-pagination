@@ -8,7 +8,6 @@ Object {
       "node": Object {
         "age": 20,
         "created_at": "1546300800000",
-        "id": "ad9b39ab-410b-4dea-8474-7f5595390faa",
         "name": "Alice",
       },
     },
@@ -17,7 +16,6 @@ Object {
       "node": Object {
         "age": 35,
         "created_at": "1551398400000",
-        "id": "30eedb09-bc72-4962-a952-8fde38ee78a6",
         "name": "Bob",
       },
     },
@@ -36,7 +34,6 @@ Object {
       "node": Object {
         "age": 90,
         "created_at": "1583020800000",
-        "id": "f4e47d1d-907c-46a6-b3d7-7677ecda4d21",
         "name": "Zen",
       },
     },
@@ -45,7 +42,6 @@ Object {
       "node": Object {
         "age": 22,
         "created_at": "1527811200000",
-        "id": "cefc62c2-6d61-4af4-a9e5-34630455b650",
         "name": "Ed",
       },
     },

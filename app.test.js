@@ -16,7 +16,6 @@ function createUsersQuery(first = 2, after, sort) {
     Users(input: {${firstInput}${afterInput}${sortInput}}) {
       edges {
         node {
-          id
           name
           age
           created_at
@@ -36,10 +35,6 @@ async function findUsers({ first, after = undefined, sort = undefined }) {
   const response = await axios.post(`${baseEndpoint}/graphql`, { query });
   return response.data.data.Users[0];
 }
-
-// async function wait(ms = 1000) {
-//   return new Promise((resolve) => setTimeout(resolve, ms));
-// }
 
 beforeAll(async () => {
   await start(port);
