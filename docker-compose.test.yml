@@ -9,7 +9,7 @@ services:
       - ~/repo/test-results:/test-results
       - /var/run/docker.sock:/var/run/docker.sock
     command: |
-      DB_HOST=db node ./scripts/waitForDb.js
+      node ./scripts/waitForDb.js
       npm run test
     environment:
       - JEST_JUNIT_OUTPUT=./test-results/junit/results.xml
