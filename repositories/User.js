@@ -14,6 +14,11 @@ class User {
 
     if (before && after) throw new Error('before and after cursors are mutually exclusive');
 
+    const direction = this.Cursor.getPaginationDirection(before, after);
+
+    if (before) {
+      cursorInfo = this.Cursor.deserialize(before, sort);
+    }
     if (after) {
       cursorInfo = this.Cursor.deserialize(after, sort);
     }
@@ -37,7 +42,7 @@ class User {
             .orderBy(sort.field, sort.order);
         }
       })
-      .orderBy('created_at', 'desc')
+      .orderBy('created_at', 'asc')
       .limit(first);
     return result;
   }

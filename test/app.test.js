@@ -36,6 +36,7 @@ function getNames(users) {
 
 async function findUsers({ first, after = undefined, sort = undefined }, log = false) {
   const query = createUsersQuery(first, after, sort);
+  // eslint-disable-next-line no-console
   if (log) { console.log(`query ${query}`); }
   const response = await axios.post(`${baseEndpoint}/graphql`, { query });
   return response.data.data.Users[0];
@@ -111,5 +112,14 @@ describe('users query', () => {
     };
     const users = await findUsers(input);
     expect(getNames(users)).toEqual(['Ed', 'Alice']);
+  });
+
+  it('should paginate before cursor', async () => {
+    const input = {
+      first: 2,
+      before: '1551398400000',
+    };
+    const users = await findUsers(input);
+    expect(getNames(users)).toEqual(['Carl', 'Ed']);
   });
 });

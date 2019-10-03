@@ -37,6 +37,16 @@ class Cursor {
     data.created_at = new Date(Number(timestamp));
     return data;
   }
+
+  static getPaginationDirection(before, after) {
+    if (before) {
+      return 'before';
+    }
+    if (after) {
+      return 'after';
+    }
+    return null;
+  }
 }
 
 
