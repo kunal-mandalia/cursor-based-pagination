@@ -24,13 +24,13 @@ class User {
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
-              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'asc' ? '<' : '>'}`, cursorInfo.sort.value)
+              .orderBy(cursorInfo.sort.field, cursorInfo.sort.order)
+              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'asc' ? '>' : '<'}`, cursorInfo.sort.value)
               .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
-              .andWhere('created_at', '<', cursorInfo.created_at)
-              .orderBy(cursorInfo.sort.field, cursorInfo.sort.order);
+              .andWhere('created_at', '>', cursorInfo.created_at);
           } else {
             queryBuilder
-              .where('created_at', '<', cursorInfo.created_at);
+              .where('created_at', '>', cursorInfo.created_at);
           }
         } else if (sort) {
           queryBuilder

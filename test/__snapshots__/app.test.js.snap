@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`users should be ordered by name ascendingly 1`] = `
+exports[`users query should be ordered by name ascendingly 1`] = `
 Object {
   "edges": Array [
     Object {
@@ -26,7 +26,7 @@ Object {
 }
 `;
 
-exports[`users should be ordered by name descendingly 1`] = `
+exports[`users query should be ordered by name descendingly 1`] = `
 Object {
   "edges": Array [
     Object {
@@ -48,6 +48,32 @@ Object {
   ],
   "pageInfo": Object {
     "endCursor": "1527811200000___name_Ed_desc",
+  },
+}
+`;
+
+exports[`users query should paginate after cursor 1`] = `
+Object {
+  "edges": Array [
+    Object {
+      "cursor": "1564617600000___name_Doug_asc",
+      "node": Object {
+        "age": 30,
+        "created_at": "1564617600000",
+        "name": "Doug",
+      },
+    },
+    Object {
+      "cursor": "1527811200000___name_Ed_asc",
+      "node": Object {
+        "age": 22,
+        "created_at": "1527811200000",
+        "name": "Ed",
+      },
+    },
+  ],
+  "pageInfo": Object {
+    "endCursor": "1527811200000___name_Ed_asc",
   },
 }
 `;
