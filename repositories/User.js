@@ -1,5 +1,8 @@
+/* eslint-disable no-nested-ternary */
 function buildFindUsersQuery(db, Cursor) {
   return async function query(first, last, before, after, sort) {
+    // console.log('first, last, before, after, sort', first, last, before, after, sort);
+
     let cursorInfo;
 
     if (before && after) throw new Error('before and after cursors are mutually exclusive');
@@ -11,27 +14,32 @@ function buildFindUsersQuery(db, Cursor) {
       cursorInfo = Cursor.deserialize(after, sort);
     }
 
-    return db.from('app_user')
+    const data = await db.from('app_user')
       .select('*')
       .modify((queryBuilder) => {
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
-              .orderBy(cursorInfo.sort.field, cursorInfo.sort.order)
-              .where(cursorInfo.sort.field, `${cursorInfo.sort.order === 'asc' ? '>' : '<'}`, cursorInfo.sort.value)
+              .orderBy(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? 'desc' : 'desc') : cursorInfo.sort.order}`)
+              .where(cursorInfo.sort.field, `${last ? '<' : '>'}`, cursorInfo.sort.value)
               .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
-              .andWhere('created_at', '>', cursorInfo.created_at);
+              .andWhere('created_at', `${before ? '<' : '>'}`, cursorInfo.created_at);
           } else {
             queryBuilder
-              .where('created_at', '>', cursorInfo.created_at);
+              .where('created_at', `${before ? '<' : '>'}`, cursorInfo.created_at);
           }
         } else if (sort) {
           queryBuilder
             .orderBy(sort.field, sort.order);
         }
       })
-      .orderBy('created_at', 'asc')
-      .limit(first);
+      .orderBy('created_at', `${last ? 'desc' : 'asc'}`)
+      .limit(first || last);
+
+    if (last) {
+      return data.sort((a, b) => a.created_at - b.created_at);
+    }
+    return data;
   };
 }
 
@@ -46,7 +54,7 @@ class User {
     return result;
   }
 
-  async find(first = 2, before, last, after, sort) {
+  async find(first, last, before, after, sort) {
     const query = await buildFindUsersQuery(this.db, this.Cursor);
     const result = await query(first, last, before, after, sort);
     return result;

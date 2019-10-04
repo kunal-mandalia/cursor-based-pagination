@@ -4,7 +4,7 @@ const Cursor = require('../util/cursor');
 const queries = {
   Users: async (_, {
     input: {
-      first = 2, last, before, after, sort,
+      first, last, before, after, sort,
     },
   }, context) => {
     const data = await context.repositories.user.find(first, last, before, after, sort);
