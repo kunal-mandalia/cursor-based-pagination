@@ -54,8 +54,8 @@ input UserSortOption {
 }
 
 input PaginatedSearch {
-  first: Int!
-  # last: Int!
+  first: Int
+  last: Int
   before: String
   after: String
   sort: UserSortOption

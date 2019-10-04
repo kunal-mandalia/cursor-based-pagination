@@ -4,10 +4,10 @@ const Cursor = require('../util/cursor');
 const queries = {
   Users: async (_, {
     input: {
-      first = 2, before, after, sort,
+      first = 2, last, before, after, sort,
     },
   }, context) => {
-    const data = await context.repositories.user.find(first, before, after, sort);
+    const data = await context.repositories.user.find(first, last, before, after, sort);
     const pageInfo = {
       startCursor: data.length > 0 ? Cursor.serialize(data[0], sort) : null,
       endCursor: data.length > 0 ? Cursor.serialize(data[data.length - 1], sort) : null,
