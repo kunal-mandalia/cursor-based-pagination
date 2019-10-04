@@ -20,8 +20,8 @@ function buildFindUsersQuery(db, Cursor) {
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
-              .orderBy(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? 'desc' : 'desc') : cursorInfo.sort.order}`)
-              .where(cursorInfo.sort.field, `${last ? '<' : '>'}`, cursorInfo.sort.value)
+              .orderBy(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? 'desc' : 'asc') : cursorInfo.sort.order}`)
+              .where(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? '<' : '>') : '>'}`, cursorInfo.sort.value)
               .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
               .andWhere('created_at', `${before ? '<' : '>'}`, cursorInfo.created_at);
           } else {
