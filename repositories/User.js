@@ -14,7 +14,6 @@ function buildFindUsersQuery(db, Cursor) {
     return db.from('app_user')
       .select('*')
       .modify((queryBuilder) => {
-      //
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
