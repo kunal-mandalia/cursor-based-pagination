@@ -1,8 +1,7 @@
 const Cursor = require('../util/cursor');
 
-
 const queries = {
-  Users: async (_, {
+  users: async (_, {
     input: {
       first, last, before, after, sort,
     },
@@ -12,13 +11,13 @@ const queries = {
       startCursor: data.length > 0 ? Cursor.serialize(data[0], sort) : null,
       endCursor: data.length > 0 ? Cursor.serialize(data[data.length - 1], sort) : null,
     };
-    return [{
+    return {
       edges: data.map((user) => ({
         node: user,
         cursor: Cursor.serialize(user, sort),
       })),
       pageInfo,
-    }];
+    };
   },
 };
 
@@ -29,7 +28,7 @@ const fields = {
 };
 
 const mutations = {
-  UpdateUser: () => [],
+  updateUser: () => [],
 };
 
 const resolvers = {
