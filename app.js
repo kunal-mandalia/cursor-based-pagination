@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const express = require('express');
+const cors = require('cors');
 const graphqlHTTP = require('./graphql/middleware');
 
 let instance;
@@ -7,6 +8,8 @@ let instance;
 const app = express();
 
 const port = process.env.PORT || 8080;
+
+app.use(cors());
 
 app.get('/status', (_, res) => {
   res.json({ status: 'UP' });
