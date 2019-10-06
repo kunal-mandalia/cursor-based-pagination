@@ -16,7 +16,7 @@ interface Edge {
 }
 
 interface Connection {
-  edges: [Edge!]
+  edges: [Edge]!
   pageInfo: PageInfo!
 }
 
@@ -34,7 +34,7 @@ type UserEdge implements Edge {
 }
 
 type UserConnection implements Connection {
-  edges: [UserEdge!]
+  edges: [UserEdge]!
   pageInfo: PageInfo!
 }
 
