@@ -4,6 +4,11 @@ import { User } from './User';
 import { USERS } from './queries/Users'
 import { Users as UsersData, UsersVariables, Users_users } from './queries/types/Users'
 import './Users.css';
+import { PaginatedSearch } from './globalTypes';
+
+interface IUsersWithData {
+  search: PaginatedSearch;
+}
 
 interface IUsers {
   users: Users_users;
@@ -12,12 +17,10 @@ interface IUsers {
   children?: React.ReactNode;
 }
 
-export function UsersWithData() {
+export function UsersWithData(props : IUsersWithData) {
   const { loading, error, data, fetchMore } = useQuery<UsersData, UsersVariables>(USERS, {
     variables: {
-      input: {
-        first: 2
-      }
+      input: props.search
     }
   });
   if (loading) return <p>Loading...</p>;
@@ -34,7 +37,7 @@ export function UsersWithData() {
       onLoadMore={() => {
         fetchMore({
           query: USERS,
-          variables: { input: { first: 2, after: endCursor }},
+          variables: { input: { ...props.search, after: endCursor }},
           updateQuery: (previousResult, { fetchMoreResult }) => {
             console.log('fetchMoreResult', fetchMoreResult)
             const returnValue : UsersData = {

@@ -1,7 +1,8 @@
 .User {
   font-size: medium;
   background-color: white;
-  padding: 20px;
-  color: black;
+  padding: 10px 20px;
+  color: #000000;
   margin: 2px;
+  width: 250px;
 }
