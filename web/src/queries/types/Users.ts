@@ -2,7 +2,7 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { PaginatedSearch } from "./../../../types/globalTypes";
+import { PaginatedSearch } from "./../../globalTypes";
 
 // ====================================================
 // GraphQL query operation: Users
