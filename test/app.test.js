@@ -110,14 +110,14 @@ describe('users query', () => {
     expect(getNames(users)).toEqual(['Ed', 'Doug']);
   });
 
-  it('should paginate after cursor, sorted descendingly', async () => {
+  it('should paginate after cursor, sorted by age descendingly', async () => {
     const input = {
       first: 100,
       after: '1517443200000___age_22_desc',
       sort: { field: 'age', order: 'desc' },
     };
     const users = await findUsers(input);
-    expect(getNames(users)).toEqual(['Zen', 'Bob', 'Doug', 'Ed']);
+    expect(getNames(users)).toEqual(['Ed', 'Alice']);
   });
 
   it('should paginate before cursor', async () => {
@@ -154,5 +154,15 @@ describe('users query', () => {
     };
     const users = await findUsers(input);
     expect(getNames(users)).toEqual(['Ed', 'Bob', 'Doug']);
+  });
+
+  it('should paginate next 2 results after cursor with desc sort', async () => {
+    const input = {
+      first: 2,
+      after: '1527811200000___name_Ed_desc',
+      sort: { field: 'name', order: 'desc' },
+    };
+    const users = await findUsers(input);
+    expect(getNames(users)).toEqual(['Doug', 'Carl']);
   });
 });

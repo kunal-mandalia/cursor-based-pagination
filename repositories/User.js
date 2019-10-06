@@ -1,9 +1,23 @@
 /* eslint-disable no-nested-ternary */
+
+function getSortOrderBy(sort, isLast) {
+  return isLast ? (sort.order === 'asc' ? 'desc' : 'asc') : sort.order;
+}
+
+function getSortWhereComparison(sort, isLast) {
+  if (isLast) {
+    return (sort.order === 'asc') ? '<' : '>';
+  }
+  return sort.order === 'asc' ? '>' : '<';
+}
+
 function buildFindUsersQuery(db, Cursor) {
   return async function query(first, last, before, after, sort) {
     // console.log('first, last, before, after, sort', first, last, before, after, sort);
 
     let cursorInfo;
+    const isFirst = typeof first === 'number';
+    const isLast = !isFirst;
 
     if (before && after) throw new Error('before and after cursors are mutually exclusive');
 
@@ -13,6 +27,7 @@ function buildFindUsersQuery(db, Cursor) {
     if (after) {
       cursorInfo = Cursor.deserialize(after, sort);
     }
+    // console.log('cursorInfo', cursorInfo);
 
     const data = await db.from('app_user')
       .select('*')
@@ -20,8 +35,12 @@ function buildFindUsersQuery(db, Cursor) {
         if (cursorInfo) {
           if (cursorInfo.sort) {
             queryBuilder
-              .orderBy(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? 'desc' : 'asc') : cursorInfo.sort.order}`)
-              .where(cursorInfo.sort.field, `${last ? (cursorInfo.sort.order === 'asc' ? '<' : '>') : '>'}`, cursorInfo.sort.value)
+              .orderBy(sort.field, getSortOrderBy(sort, isLast))
+              .where(
+                cursorInfo.sort.field,
+                getSortWhereComparison(sort, isLast),
+                cursorInfo.sort.value,
+              )
               .orWhere(cursorInfo.sort.field, '=', cursorInfo.sort.value)
               .andWhere('created_at', `${before ? '<' : '>'}`, cursorInfo.created_at);
           } else {
@@ -33,10 +52,10 @@ function buildFindUsersQuery(db, Cursor) {
             .orderBy(sort.field, sort.order);
         }
       })
-      .orderBy('created_at', `${last ? 'desc' : 'asc'}`)
+      .orderBy('created_at', `${isLast ? 'desc' : 'asc'}`)
       .limit(first || last);
 
-    if (last) {
+    if (isLast) {
       return data.sort((a, b) => a.created_at - b.created_at);
     }
     return data;

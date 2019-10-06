@@ -16,7 +16,7 @@ function nextSearchOrder(search: PaginatedSearch, field: UserSortField): SortOrd
 }
 
 export function Search({ search, setSearch } : ISearch) {
-  return <>
+  return <div style={{ display: 'flex', padding: '20px' }}>
       <button onClick={() => setSearch(() => ({
         ...search,
         sort: {
@@ -36,5 +36,5 @@ export function Search({ search, setSearch } : ISearch) {
         before: undefined,
         after: undefined
       }))}>Sort by age (->{nextSearchOrder(search, UserSortField.age)})</button>
-    </>
+    </div>
 }
