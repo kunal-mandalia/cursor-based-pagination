@@ -8,7 +8,7 @@ import { PaginatedSearch } from "./../../../types/globalTypes";
 // GraphQL query operation: Users
 // ====================================================
 
-export interface Users_Users_edges_node {
+export interface Users_users_edges_node {
   __typename: "User";
   id: string;
   name: string;
@@ -16,25 +16,25 @@ export interface Users_Users_edges_node {
   created_at: string;
 }
 
-export interface Users_Users_edges {
+export interface Users_users_edges {
   __typename: "UserEdge";
-  node: Users_Users_edges_node;
+  node: Users_users_edges_node;
   cursor: string;
 }
 
-export interface Users_Users_pageInfo {
+export interface Users_users_pageInfo {
   __typename: "PageInfo";
   endCursor: string | null;
 }
 
-export interface Users_Users {
+export interface Users_users {
   __typename: "UserConnection";
-  edges: Users_Users_edges[] | null;
-  pageInfo: Users_Users_pageInfo;
+  edges: (Users_users_edges | null)[];
+  pageInfo: Users_users_pageInfo;
 }
 
 export interface Users {
-  Users: Users_Users[] | null;
+  users: Users_users;
 }
 
 export interface UsersVariables {

@@ -15,7 +15,7 @@ function createUsersQuery(first, last, before, after, sort) {
   const sortInput = sort ? `,sort: {field:${sort.field},order:${sort.order}}` : '';
   return `
   {
-    Users(input: {${limit}${beforeInput}${afterInput}${sortInput}}) {
+    users(input: {${limit}${beforeInput}${afterInput}${sortInput}}) {
       edges {
         node {
           name
@@ -45,7 +45,7 @@ async function findUsers({
   if (response.data.errors) {
     console.error(response.data.errors);
   }
-  return response.data.data.Users[0];
+  return response.data.data.users;
 }
 
 beforeAll(async () => {

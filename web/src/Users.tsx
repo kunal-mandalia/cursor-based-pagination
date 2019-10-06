@@ -2,11 +2,11 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import { User } from './User';
 import { USERS } from './queries/Users'
-import { Users as UsersData, UsersVariables } from './queries/types/Users'
+import { Users as UsersData, UsersVariables, Users_users } from './queries/types/Users'
 import './Users.css';
 
 interface IUsers {
-  data: UsersData;
+  users: Users_users;
   hasMoreData: boolean;
   onLoadMore: any;
   children?: React.ReactNode;
@@ -22,14 +22,14 @@ export function UsersWithData() {
   });
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-  if (!data || !data.Users) return <p>No data</p>;
+  if (!data || !data.users) return <p>No data</p>;
   
-  const endCursor = data.Users[0].pageInfo.endCursor;
+  const endCursor = data.users.pageInfo.endCursor;
   console.log('endCursor', endCursor);
   const hasMoreData = !!endCursor;
   return (
     <Users
-      data={data}
+      users={data.users}
       hasMoreData={hasMoreData}
       onLoadMore={() => {
         fetchMore({
@@ -38,16 +38,14 @@ export function UsersWithData() {
           updateQuery: (previousResult, { fetchMoreResult }) => {
             console.log('fetchMoreResult', fetchMoreResult)
             const returnValue : UsersData = {
-              Users: [
-                {
-                  edges: [...previousResult!.Users![0].edges!, ...fetchMoreResult!.Users![0].edges!],
+              users: {
+                  edges: [...previousResult.users.edges, ...fetchMoreResult!.users.edges],
                   pageInfo: {
-                    endCursor: fetchMoreResult!.Users![0].pageInfo!.endCursor,
+                    endCursor: fetchMoreResult!.users.pageInfo.endCursor,
                     __typename: "PageInfo"
                   },
                   __typename: "UserConnection"
                 }
-              ],
             }
             return returnValue;
           }
@@ -57,19 +55,11 @@ export function UsersWithData() {
   )
 }
 
-export const Users = ({ data, hasMoreData, onLoadMore } : IUsers) => {
+export const Users = ({ users, hasMoreData, onLoadMore } : IUsers) => {
   return (
     <>
       <div className="Users">
-        {
-          data.Users!.map(
-            usersConnection => (
-              usersConnection!.edges!
-                .map(edge => <User key={edge.node.id} user={edge.node} />
-                )
-            )
-          )
-        }
+        {users.edges.map(edge => <User key={edge!.node.id} user={edge!.node} />)}
       </div>
       {hasMoreData && <button onClick={onLoadMore}>fetch more</button>}
     </>

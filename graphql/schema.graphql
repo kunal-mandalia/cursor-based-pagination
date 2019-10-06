@@ -16,7 +16,7 @@ interface Edge {
 }
 
 interface Connection {
-  edges: [Edge!]
+  edges: [Edge]!
   pageInfo: PageInfo!
 }
 
@@ -34,7 +34,7 @@ type UserEdge implements Edge {
 }
 
 type UserConnection implements Connection {
-  edges: [UserEdge!]
+  edges: [UserEdge]!
   pageInfo: PageInfo!
 }
 
@@ -62,9 +62,9 @@ input PaginatedSearch {
 }
 
 type Query {
-  Users(input: PaginatedSearch): [UserConnection!]
+  users(input: PaginatedSearch): UserConnection!
 }
 
 type Mutation {
-  UpdateUser(id: String): User!
+  updateUser(id: String): User!
 }
