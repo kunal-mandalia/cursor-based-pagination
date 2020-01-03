@@ -13,8 +13,7 @@ function getSortWhereComparison(sort, isLast) {
 
 function buildFindUsersQuery(db, Cursor) {
   return async function query(first, last, before, after, sort) {
-    // console.log('first, last, before, after, sort', first, last, before, after, sort);
-
+    
     let cursorInfo;
     const isFirst = typeof first === 'number';
     const isLast = !isFirst;
