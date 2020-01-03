@@ -27,7 +27,6 @@ function buildFindUsersQuery(db, Cursor) {
     if (after) {
       cursorInfo = Cursor.deserialize(after, sort);
     }
-    // console.log('cursorInfo', cursorInfo);
 
     const data = await db.from('app_user')
       .select('*')
