@@ -13,3 +13,7 @@
 1. `cd web`
 2. Run web app `npm run start`
 3. See web app on `http://localhost:3000`
+
+### Run tests
+1. Spin up database `docker-compose up`
+2. Run tests `yarn test`
