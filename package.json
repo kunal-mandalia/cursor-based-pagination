@@ -23,7 +23,7 @@
   "homepage": "https://github.com/kunal-mandalia/cursor-based-pagination#readme",
   "dependencies": {
     "@types/axios": "^0.14.0",
-    "apollo-server-express": "^2.9.4",
+    "apollo-server-express": "^2.14.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
